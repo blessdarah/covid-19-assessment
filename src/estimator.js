@@ -16,8 +16,7 @@
     totalHospitalBeds: 1380614
   }
 */
-
-function estimateFutureCases(data, currentInfectedCases) {
+const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = null;
   switch (data.periodType) {
     // 7 days * # 28 weeks
@@ -34,21 +33,20 @@ function estimateFutureCases(data, currentInfectedCases) {
   }
 
   return currentInfectedCases * 2 ** factor;
-}
+};
 
 // get x% of total
-const getPercentageFrom => (percentage, total) {
-  return (percentage * totalCases) / 100;
-}
+const getPercentageFrom = (percentage, totalCases) => (percentage * totalCases) / 100;
 
 // Get the beds needed over time
-const bedsNeededOverTime => (severeCases, availableBeds) {
+const bedsNeededOverTime = (severeCases, availableBeds) => {
   if (severeCases < availableBeds) {
     return availableBeds;
   }
 
   return severeCases - availableBeds;
-}
+};
+
 
 const covid19ImpactEstimator = (data) => {
   const impact = {};
@@ -72,25 +70,35 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // TASK: Get severe cases requiring hospital beds
-  // Impact cases: 
+  // Impact cases:
   impact.serverCasesByRequestTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
 
   // Severe impact cases:
-  severeImpact.serverCasesByRequestTime = getPercentageFrom(15, severeImpact.infectionsByRequestedTime);
+  severeImpact.serverCasesByRequestTime = getPercentageFrom(
+    15, severeImpact.infectionsByRequestedTime
+  );
 
 
   // TASK: Determine number of available beds for severe cases
   const availableHostpitalBeds = getPercentageFrom(35, data.totalHospitalBeds);
 
   // Impact cases:
-  impact.hospitalBedsByRequestedTime = bedsNeededOverTime(impact.serverCasesByRequestTime, availableHostpitalBeds);
+  impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
+    impact.serverCasesByRequestTime,
+    availableHostpitalBeds
+  );
 
   // Severe impact cases:
   severeImpact.hospitalBedsByRequestedTime = bedsNeededOverTime(
-    severeImpact.serverCasesByRequestTime, 
-    availableHostpitalBeds);
+    severeImpact.serverCasesByRequestTime,
+    availableHostpitalBeds
+  );
 
-
-  return { data, impact, severeImpact }; };
+  return {
+    data,
+    impact,
+    severeImpact
+  };
+};
 
 export default covid19ImpactEstimator;
