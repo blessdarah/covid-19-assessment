@@ -28,7 +28,7 @@ function estimateFutureCases(periodType, currentInfectedCases) {
             break;
     }
 
-    return 2 ** factor;
+    return currentInfectedCases * (2 ** factor);
 }
 
 export default covid19ImpactEstimator;
