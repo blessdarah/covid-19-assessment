@@ -36,27 +36,61 @@ function estimateFutureCases(data, currentInfectedCases) {
   return currentInfectedCases * 2 ** factor;
 }
 
+// get x% of total
+const getPercentageFrom => (percentage, total) {
+  return (percentage * totalCases) / 100;
+}
+
+// Get the beds needed over time
+const bedsNeededOverTime => (severeCases, availableBeds) {
+  if (severeCases < availableBeds) {
+    return availableBeds;
+  }
+
+  return severeCases - availableBeds;
+}
+
 const covid19ImpactEstimator = (data) => {
   const impact = {};
   const severeImpact = {};
   // reported cases
   impact.currentlyInfected = data.reportedCases * 10;
   severeImpact.currentlyInfected = data.reportedCases * 50;
-  // Estimate cases for the next 28 days on impact
+
+
+  // TASK: Estimate cases for the next n days on impact
+  // Impact cases:
   impact.infectionsByRequestedTime = estimateFutureCases(
     data,
     impact.currentlyInfected
   );
-  // Estimate cases for the next 28 days on severe impact
+
+  // Severe impact cases:
   severeImpact.infectionsByRequestedTime = estimateFutureCases(
     data,
     severeImpact.currentlyInfected
   );
-  return {
-    data,
-    impact,
-    severeImpact
-  };
-};
+
+  // TASK: Get severe cases requiring hospital beds
+  // Impact cases: 
+  impact.serverCasesByRequestTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
+
+  // Severe impact cases:
+  severeImpact.serverCasesByRequestTime = getPercentageFrom(15, severeImpact.infectionsByRequestedTime);
+
+
+  // TASK: Determine number of available beds for severe cases
+  const availableHostpitalBeds = getPercentageFrom(35, data.totalHospitalBeds);
+
+  // Impact cases:
+  impact.hospitalBedsByRequestedTime = bedsNeededOverTime(impact.serverCasesByRequestTime, availableHostpitalBeds);
+
+  // Severe impact cases:
+  severeImpact.hospitalBedsByRequestedTime = bedsNeededOverTime(
+    severeImpact.serverCasesByRequestTime, 
+    availableHostpitalBeds);
+
+
+  return { data, impact, severeImpact }; };
 
 export default covid19ImpactEstimator;
