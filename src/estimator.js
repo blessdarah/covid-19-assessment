@@ -3,17 +3,17 @@
 // in coming data sample
 /*
   {
-	region: {
-	  name: "Africa",
-	  avgAge: 19.7,
-	  avgDailyIncomeInUSD: 5,
-	  avgDailyIncomePopulation: 0.71
-	},
-	periodType: "days",
-	timeToElapse: 58,
-	reportedCases: 674,
-	population: 66622705,
-	totalHospitalBeds: 1380614
+    region: {
+      name: "Africa",
+      avgAge: 19.7,
+      avgDailyIncomeInUSD: 5,
+      avgDailyIncomePopulation: 0.71
+    },
+    periodType: "days",
+    timeToElapse: 58,
+    reportedCases: 674,
+    population: 66622705,
+    totalHospitalBeds: 1380614
   }
 */
 const estimateFutureCases = (data, currentInfectedCases) => {
@@ -36,7 +36,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
 };
 
 // get x% of total
-const getPercentageFrom = (percentage, totalCases) => (percentage * totalCases) / 100;
+const getPercentageFrom = (percentage, totalCases) => Math.floor((percentage * totalCases) / 100);
 
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => {
@@ -80,7 +80,7 @@ const covid19ImpactEstimator = (data) => {
 
 
   // TASK: Determine number of available beds for severe cases
-  const availableHostpitalBeds = Math.ceil(getPercentageFrom(35, data.totalHospitalBeds));
+  const availableHostpitalBeds = getPercentageFrom(35, data.totalHospitalBeds);
 
   // Impact cases:
   impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
@@ -94,14 +94,10 @@ const covid19ImpactEstimator = (data) => {
     availableHostpitalBeds
   );
 
-  const estimate = {
-    impact,
-    severeImpact
-  };
-
   return {
     data,
-    estimate
+    impact,
+    severeImpact
   };
 };
 
