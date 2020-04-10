@@ -21,22 +21,22 @@ const estimateFutureCases = (data, currentInfectedCases) => {
   switch (data.periodType) {
     // 7 days * # 28 weeks
     case 'weeks':
-      factor = Math.floor((7 * data.timeToElapse) / 3);
+      factor = Math.trunc((7 * data.timeToElapse) / 3);
       break;
     case 'months':
       // 30 days * 28 months
-      factor = Math.floor((30 * data.timeToElapse) / 3);
+      factor = Math.trunc((30 * data.timeToElapse) / 3);
       break;
     default:
-      factor = Math.floor(data.timeToElapse / 3);
+      factor = Math.trunc(data.timeToElapse / 3);
       break;
   }
 
-  return currentInfectedCases * 2 ** factor;
+  return currentInfectedCases * (2 ** factor);
 };
 
 // get x% of total
-const getPercentageFrom = (percentage, totalCases) => Math.floor((percentage * totalCases) / 100);
+const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage * totalCases) / 100);
 
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => {
