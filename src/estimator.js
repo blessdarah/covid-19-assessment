@@ -19,7 +19,10 @@
 const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = null;
   switch (data.periodType) {
-    // 7 days * # 28 weeks
+    case 'days':
+      factor = Math.trunc(data.timeToElapse / 3);
+      break;
+      // 7 days * # 28 weeks
     case 'weeks':
       factor = Math.trunc((7 * data.timeToElapse) / 3);
       break;
@@ -28,8 +31,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       factor = Math.trunc((30 * data.timeToElapse) / 3);
       break;
     default:
-      factor = Math.trunc(data.timeToElapse / 3);
-      break;
+      return 0;
   }
 
   return currentInfectedCases * (2 ** factor);
@@ -71,10 +73,10 @@ const covid19ImpactEstimator = (data) => {
 
   // TASK: Get severe cases requiring hospital beds
   // Impact cases:
-  impact.serverCasesByRequestTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
+  impact.serverCasesByRequestedTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
 
   // Severe impact cases:
-  severeImpact.serverCasesByRequestTime = getPercentageFrom(
+  severeImpact.serverCasesByRequestedTime = getPercentageFrom(
     15, severeImpact.infectionsByRequestedTime
   );
 
@@ -84,13 +86,13 @@ const covid19ImpactEstimator = (data) => {
 
   // Impact cases:
   impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
-    impact.serverCasesByRequestTime,
+    impact.serverCasesByRequestedTime,
     availableHostpitalBeds
   );
 
   // Severe impact cases:
   severeImpact.hospitalBedsByRequestedTime = bedsNeededOverTime(
-    severeImpact.serverCasesByRequestTime,
+    severeImpact.serverCasesByRequestedTime,
     availableHostpitalBeds
   );
 
