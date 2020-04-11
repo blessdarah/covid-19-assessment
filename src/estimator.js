@@ -41,14 +41,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
 const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage * totalCases) / 100);
 
 // Get the beds needed over time
-const bedsNeededOverTime = (severeCases, availableBeds) => {
-  if (severeCases < availableBeds) {
-    return availableBeds;
-  }
-
-  return severeCases - availableBeds;
-};
-
+const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - severeCases;
 
 const covid19ImpactEstimator = (data) => {
   const impact = {};
@@ -94,6 +87,23 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.hospitalBedsByRequestedTime = bedsNeededOverTime(
     severeImpact.serverCasesByRequestedTime,
     availableHostpitalBeds
+  );
+
+  /* Challenge 3: */
+  // Determine 5% of infections by requested time
+  impact.casesForICUByRequestedTime = getPercentageFrom(5, impact.infectionsByRequestedTime);
+
+  severeImpact.casesForICUByRequestedTime = getPercentageFrom(
+    5, severeImpact.infectionsByRequestedTime
+  );
+
+  // Determine 2% of infections by requested time
+  impact.casesForVentilatorsByRequestedTime = getPercentageFrom(
+    2, impact.infectionsByRequestedTime
+  );
+
+  severeImpact.casesForVentilatorsByRequestedTime = getPercentageFrom(
+    2, severeImpact.infectionsByRequestedTime
   );
 
   return {
