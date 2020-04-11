@@ -1,23 +1,21 @@
 /* eslint-disable linebreak-style */
 
 // in coming data sample
-/*
-  {
-    region: {
-      name: "Africa",
-      avgAge: 19.7,
-      avgDailyIncomeInUSD: 5,
-      avgDailyIncomePopulation: 0.71
-    },
-    periodType: "days",
-    timeToElapse: 58,
-    reportedCases: 674,
-    population: 66622705,
-    totalHospitalBeds: 1380614
-  }
-*/
+// const covidData = {
+//   region: {
+//     name: 'Africa',
+//     avgAge: 19.7,
+//     avgDailyIncomeInUSD: 5,
+//     avgDailyIncomePopulation: 0.71
+//   },
+//   periodType: 'days',
+//   timeToElapse: 58,
+//   reportedCases: 674,
+//   population: 66622705,
+//   totalHospitalBeds: 1380614
+// };
 const estimateFutureCases = (data, currentInfectedCases) => {
-  let factor = null;
+  let factor = 0;
   switch (data.periodType) {
     case 'days':
       factor = Math.trunc(data.timeToElapse / 3);
@@ -31,7 +29,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       factor = Math.trunc((30 * data.timeToElapse) / 3);
       break;
     default:
-      return 0;
+      break;
   }
   return currentInfectedCases * (2 ** factor);
 };
@@ -73,19 +71,17 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // TASK: Determine number of available beds for severe cases
-  const availableHostpitalBeds = data.totalHospitalBeds - getPercentageFrom(
-    65, data.totalHospitalBeds
-  );
+  const availableHostpitalBeds = getPercentageFrom(35, data.totalHospitalBeds);
 
   // Impact cases:
   impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
-    impact.serverCasesByRequestedTime,
+    impact.severeCasesByRequestedTime,
     availableHostpitalBeds
   );
 
   // Severe impact cases:
   severeImpact.hospitalBedsByRequestedTime = bedsNeededOverTime(
-    severeImpact.serverCasesByRequestedTime,
+    severeImpact.severeCasesByRequestedTime,
     availableHostpitalBeds
   );
 
@@ -113,4 +109,5 @@ const covid19ImpactEstimator = (data) => {
   };
 };
 
+// covid19ImpactEstimator(covidData);
 export default covid19ImpactEstimator;
