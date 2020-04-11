@@ -16,22 +16,27 @@
 // };
 const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = 0;
+  let days = 0;
   switch (data.periodType) {
     case 'days':
-      factor = Math.trunc(data.timeToElapse / 3);
+      days = data.timeToElapse;
+      factor = Math.trunc(days / 3);
       break;
       // 7 days * # 28 weeks
     case 'weeks':
-      factor = Math.trunc((7 * data.timeToElapse) / 3);
+      days = 7 * data.timeToElapse;
+      factor = Math.trunc(days / 3);
       break;
     case 'months':
       // 30 days * 28 months
-      factor = Math.trunc((30 * data.timeToElapse) / 3);
+      days = 30 * data.timeToElapse;
+      factor = Math.trunc(days / 3);
       break;
     default:
       break;
   }
-  return currentInfectedCases * (2 ** factor);
+  const estimate = currentInfectedCases * (2 ** factor);
+  return { days, estimate };
 };
 
 // get x% of total
@@ -50,16 +55,18 @@ const covid19ImpactEstimator = (data) => {
 
   // TASK: Estimate cases for the next n days on impact
   // Impact cases:
-  impact.infectionsByRequestedTime = estimateFutureCases(
+  const impactEstimate = estimateFutureCases(
     data,
     impact.currentlyInfected
   );
+  impact.infectionsByRequestedTime = impactEstimate.estimate;
 
   // Severe impact cases:
-  severeImpact.infectionsByRequestedTime = estimateFutureCases(
+  const severeImpactEstimate = estimateFutureCases(
     data,
     severeImpact.currentlyInfected
   );
+  severeImpact.infectionsByRequestedTime = severeImpactEstimate.estimate;
 
   // TASK: Get severe cases requiring hospital beds
   // Impact cases:
@@ -104,6 +111,16 @@ const covid19ImpactEstimator = (data) => {
     2, severeImpact.infectionsByRequestedTime
   );
 
+  // Estimate how much money the economy is like to lose over this period
+  const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = data.region;
+  impact.dollarsInFlight = impact.infectionsByRequestedTime * avgDailyIncomePopulation
+    * avgDailyIncomeInUSD * impactEstimate.days;
+
+  // estimate dollars in fligt for severeCases
+  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime * avgDailyIncomePopulation
+    * avgDailyIncomeInUSD * severeImpactEstimate.days;
+  // console.log('Impact data: ', impact);
+  // console.log('Severe impact data: ', severeImpact);
   return {
     data,
     impact,
