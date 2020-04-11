@@ -68,7 +68,7 @@ const covid19ImpactEstimator = (data) => {
   impact.severeCasesByRequestedTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
 
   // Severe impact cases:
-  severeImpact.serverCasesByRequestedTime = getPercentageFrom(
+  severeImpact.severeCasesByRequestedTime = getPercentageFrom(
     15, severeImpact.infectionsByRequestedTime
   );
 
