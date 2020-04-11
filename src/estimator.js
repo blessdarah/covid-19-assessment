@@ -70,8 +70,10 @@ const covid19ImpactEstimator = (data) => {
     15, severeImpact.infectionsByRequestedTime
   );
 
-  // TASK: Determine number of available beds for severe cases
-  const availableHostpitalBeds = getPercentageFrom(35, data.totalHospitalBeds);
+  // TASK: Determine number of available beds for severe cases by 35%
+  const availableHostpitalBeds = data.totalHospitalBeds - getPercentageFrom(
+    65, data.totalHospitalBeds
+  );
 
   // Impact cases:
   impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
