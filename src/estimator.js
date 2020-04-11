@@ -33,7 +33,6 @@ const estimateFutureCases = (data, currentInfectedCases) => {
     default:
       return 0;
   }
-
   return currentInfectedCases * (2 ** factor);
 };
 
@@ -66,13 +65,12 @@ const covid19ImpactEstimator = (data) => {
 
   // TASK: Get severe cases requiring hospital beds
   // Impact cases:
-  impact.serverCasesByRequestedTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
+  impact.severeCasesByRequestedTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
 
   // Severe impact cases:
   severeImpact.serverCasesByRequestedTime = getPercentageFrom(
     15, severeImpact.infectionsByRequestedTime
   );
-
 
   // TASK: Determine number of available beds for severe cases
   const availableHostpitalBeds = data.totalHospitalBeds - getPercentageFrom(
