@@ -1,19 +1,21 @@
 /* eslint-disable linebreak-style */
 
 // in coming data sample
-// const covidData = {
-//   region: {
-//     name: 'Africa',
-//     avgAge: 19.7,
-//     avgDailyIncomeInUSD: 5,
-//     avgDailyIncomePopulation: 0.71
-//   },
-//   periodType: 'days',
-//   timeToElapse: 58,
-//   reportedCases: 674,
-//   population: 66622705,
-//   totalHospitalBeds: 1380614
-// };
+/*
+  const covidData = {
+    region: {
+      name: 'Africa',
+      avgAge: 19.7,
+      avgDailyIncomeInUSD: 4,
+      avgDailyIncomePopulation: 0.73
+    },
+    periodType: 'days',
+    timeToElapse: 38,
+    reportedCases: 2747,
+    population: 92931687,
+    totalHospitalBeds: 678874
+  };
+*/
 const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = 0;
   let days = 0;
@@ -44,6 +46,15 @@ const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage * t
 
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - severeCases;
+
+// Estimate money lose in the long run
+const estimateMoneyLose = (estimatedCases, regionalData) => {
+  // Math.trunc((infectionsByRequestedTime * dailyAvgIncome) / totalIncomePerperson);
+  const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = regionalData;
+  const incomeOverTime = avgDailyIncomeInUSD * estimatedCases.days;
+  const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation;
+  return (incomeOverTime * totalInfectedIncomePop).toFixed(2);
+};
 
 const covid19ImpactEstimator = (data) => {
   const impact = {};
@@ -112,15 +123,12 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // Estimate how much money the economy is like to lose over this period
-  const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = data.region;
-  impact.dollarsInFlight = impact.infectionsByRequestedTime * avgDailyIncomePopulation
-    * avgDailyIncomeInUSD * impactEstimate.days;
+  impact.dollarsInFlight = estimateMoneyLose(impactEstimate, data.region);
 
   // estimate dollars in fligt for severeCases
-  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime * avgDailyIncomePopulation
-    * avgDailyIncomeInUSD * severeImpactEstimate.days;
-  // console.log('Impact data: ', impact);
-  // console.log('Severe impact data: ', severeImpact);
+  severeImpact.dollarsInFlight = estimateMoneyLose(
+    severeImpactEstimate, data.region
+  );
   return {
     data,
     impact,
