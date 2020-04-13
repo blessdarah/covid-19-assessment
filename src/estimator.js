@@ -96,7 +96,7 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // TASK: Determine number of available beds for severe cases by 35%
-  const availableHostpitalBeds = data.totalHopitalBeds - Math.trunc(
+  const availableHostpitalBeds = data.totalHospitalBeds - Math.trunc(
     0.65 * data.totalHospitalBeds
   );
 
@@ -139,7 +139,7 @@ const covid19ImpactEstimator = (data) => {
     severeImpactEstimate, data.region
   );
 
-  // console.log(typeof impact.dollarsInFlight);
+  // console.log(impact);
   // console.log(severeImpact);
   return {
     data,
