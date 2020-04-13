@@ -21,7 +21,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
   let days = 0;
   switch (data.periodType) {
     default:
-      days = data.timeToElapse;
+      days = data.timeToElapse + 1;
       factor = Math.trunc(days / 3);
       break;
     // 7 days * # 28 weeks
