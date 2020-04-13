@@ -49,7 +49,6 @@ const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - sever
 
 // Estimate money lose in the long run
 const estimateMoneyLose = (estimatedCases, regionalData) => {
-  // Math.trunc((infectionsByRequestedTime * dailyAvgIncome) / totalIncomePerperson);
   const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = regionalData;
   const incomeOverTime = avgDailyIncomeInUSD * estimatedCases.days;
   const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation;
@@ -89,8 +88,8 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // TASK: Determine number of available beds for severe cases by 35%
-  const availableHostpitalBeds = data.totalHospitalBeds - getPercentageFrom(
-    65, data.totalHospitalBeds
+  const availableHostpitalBeds = getPercentageFrom(
+    35, data.totalHospitalBeds
   );
 
   // Impact cases:
@@ -106,14 +105,16 @@ const covid19ImpactEstimator = (data) => {
   );
 
   /* Challenge 3: */
-  // Determine 5% of infections by requested time
+  // TASK: Determine 5% of infections by requested time
+  // Impact cases:
   impact.casesForICUByRequestedTime = getPercentageFrom(5, impact.infectionsByRequestedTime);
 
+  // Severe impact cases:
   severeImpact.casesForICUByRequestedTime = getPercentageFrom(
     5, severeImpact.infectionsByRequestedTime
   );
 
-  // Determine 2% of infections by requested time
+  // TASK: Determine 2% of infections by requested time
   impact.casesForVentilatorsByRequestedTime = getPercentageFrom(
     2, impact.infectionsByRequestedTime
   );
@@ -122,7 +123,7 @@ const covid19ImpactEstimator = (data) => {
     2, severeImpact.infectionsByRequestedTime
   );
 
-  // Estimate how much money the economy is like to lose over this period
+  // TASK: Estimate money the economy is going to lose over this period
   impact.dollarsInFlight = estimateMoneyLose(impactEstimate, data.region);
 
   // estimate dollars in fligt for severeCases
