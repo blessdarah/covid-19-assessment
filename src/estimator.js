@@ -16,7 +16,7 @@
     totalHospitalBeds: 678874
   };
 */
-
+/* Estimate future cases */
 const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = 0;
   let days = 0;
@@ -58,9 +58,9 @@ const estimateMoneyLose = (estimatedCases, regionalData) => {
   const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation
     * avgDailyIncomeInUSD;
     // console.log('total: ', typeof totalInfectedIncomePop);
-  const result = (totalInfectedIncomePop / Number.parseInt(estimatedCases.days, 10)).toFixed(2);
+  const result = Math.trunc(totalInfectedIncomePop / estimatedCases.days, 10);
   // console.log('Result: ', typeof result);
-  return result;
+  return Number(result);
 };
 
 const covid19ImpactEstimator = (data) => {
