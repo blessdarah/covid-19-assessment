@@ -41,7 +41,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
 };
 
 // get x% of total
-const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage / 100) * totalCases);
+// const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage / 100) * totalCases);
 
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - severeCases;
@@ -79,17 +79,15 @@ const covid19ImpactEstimator = (data) => {
 
   // TASK: Get severe cases requiring hospital beds
   // Impact cases:
-  impact.severeCasesByRequestedTime = getPercentageFrom(15, impact.infectionsByRequestedTime);
+  impact.severeCasesByRequestedTime = Math.trunc(0.15 * impact.infectionsByRequestedTime);
 
   // Severe impact cases:
-  severeImpact.severeCasesByRequestedTime = getPercentageFrom(
-    15, severeImpact.infectionsByRequestedTime
+  severeImpact.severeCasesByRequestedTime = Math.trunc(
+    0.15 * severeImpact.infectionsByRequestedTime
   );
 
   // TASK: Determine number of available beds for severe cases by 35%
-  const availableHostpitalBeds = getPercentageFrom(
-    35, data.totalHospitalBeds
-  );
+  const availableHostpitalBeds = Math.trunc(0.35 * data.totalHospitalBeds);
 
   // Impact cases:
   impact.hospitalBedsByRequestedTime = bedsNeededOverTime(
@@ -106,20 +104,20 @@ const covid19ImpactEstimator = (data) => {
   /* Challenge 3: */
   // TASK: Determine 5% of infections by requested time
   // Impact cases:
-  impact.casesForICUByRequestedTime = getPercentageFrom(5, impact.infectionsByRequestedTime);
+  impact.casesForICUByRequestedTime = Math.trunc(0.05 * impact.infectionsByRequestedTime);
 
   // Severe impact cases:
-  severeImpact.casesForICUByRequestedTime = getPercentageFrom(
-    5, severeImpact.infectionsByRequestedTime
+  severeImpact.casesForICUByRequestedTime = Math.trunc(
+    0.05 * severeImpact.infectionsByRequestedTime
   );
 
   // TASK: Determine 2% of infections by requested time
-  impact.casesForVentilatorsByRequestedTime = getPercentageFrom(
+  impact.casesForVentilatorsByRequestedTime = Math.trunc(
     2, impact.infectionsByRequestedTime
   );
 
   severeImpact.casesForVentilatorsByRequestedTime = getPercentageFrom(
-    2, severeImpact.infectionsByRequestedTime
+    0.02 * severeImpact.infectionsByRequestedTime
   );
 
   // TASK: Estimate money the economy is going to lose over this period
