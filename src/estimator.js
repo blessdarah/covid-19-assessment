@@ -50,9 +50,9 @@ const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - sever
 // Estimate money lose in the long run
 const estimateMoneyLose = (estimatedCases, regionalData) => {
   const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = regionalData;
-  const incomeOverTime = avgDailyIncomeInUSD * estimatedCases.days;
-  const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation;
-  return (incomeOverTime * totalInfectedIncomePop).toFixed(2);
+  const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation
+    * avgDailyIncomeInUSD;
+  return (totalInfectedIncomePop / estimatedCases.days).toFixed(2);
 };
 
 const covid19ImpactEstimator = (data) => {
