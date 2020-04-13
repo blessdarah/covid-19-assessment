@@ -20,7 +20,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
   let factor = 0;
   let days = 0;
   switch (data.periodType) {
-    case 'days':
+    default:
       days = data.timeToElapse;
       factor = Math.trunc(days / 3);
       break;
@@ -34,10 +34,9 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       days = 30 * data.timeToElapse;
       factor = Math.trunc(days / 3);
       break;
-    default:
-      break;
   }
-  const estimate = currentInfectedCases * (2 ** factor);
+  const exponent = 2 ** factor;
+  const estimate = currentInfectedCases * exponent;
   return { days, estimate };
 };
 
@@ -88,8 +87,8 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // TASK: Determine number of available beds for severe cases by 35%
-  const availableHostpitalBeds = data.totalHospitalBeds - getPercentageFrom(
-    65, data.totalHospitalBeds
+  const availableHostpitalBeds = getPercentageFrom(
+    35, data.totalHospitalBeds
   );
 
   // Impact cases:
