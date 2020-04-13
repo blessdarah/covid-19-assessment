@@ -9,9 +9,6 @@
     <meta name="author" content="Bless Darah">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- bootstrap links -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <!-- custom styling -->
     <link rel="stylesheet" href="src/css/main.css">
 </head>
@@ -19,8 +16,19 @@
 <body>
 
     <main>
+        <div class="hero">
+            <div class="hero__container">
+                <div class="hero__content">
+                    <h1>Covid-19 Impact Estimator</h1>
+                    <p>A simple way to assess the impact that covid 19 can bring within a region just within a defined time period.</p>
+                    <a href="#form" class="btn btn-success">Try it</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- form -->
         <div class="container d-flex align-items-center">
-            <form method="get" action="#" class="bg-white shadow rounded px-4 py-4">
+            <form method="get" action="#" class="bg-white shadow rounded px-4 py-4" id="impact-form">
                 <div class="form-group">
                     <label for="population">Population of your region</label>
                     <input id="population" class="form-control" type="number" name="population" data-population>
@@ -46,7 +54,7 @@
                 <!-- Period type -->
                 <div class="form-group">
                     <label for="periodType">Choose period type</label>
-                    <select id="periodType" class="form-control" name="periodType">
+                    <select id="periodType" class="form-select" name="periodType">
                         <option value="days" selected>Days</option>
                         <option value="weeks">weeks</option>
                         <option value="months">Months</option>
@@ -59,9 +67,9 @@
         </div>
     </main>
 
-
     <!-- bootstrap and dependencies -->
     <script src="src/estimator.js"></script>
+    <script src="src/main.js"></script>
 </body>
 
 </html>
