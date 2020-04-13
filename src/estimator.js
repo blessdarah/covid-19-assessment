@@ -24,7 +24,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       days = data.timeToElapse;
       factor = Math.trunc(days / 3);
       break;
-      // 7 days * # 28 weeks
+    // 7 days * # 28 weeks
     case 'weeks':
       days = 7 * data.timeToElapse;
       factor = Math.trunc(days / 3);
@@ -37,18 +37,22 @@ const estimateFutureCases = (data, currentInfectedCases) => {
   }
   const exponent = 2 ** factor;
   const estimate = currentInfectedCases * exponent;
-  return { days, estimate };
+  return {
+    days,
+    estimate
+  };
 };
 
 // get x% of total
-// const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage / 100) * totalCases);
-
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - severeCases;
 
 // Estimate money lose in the long run
 const estimateMoneyLose = (estimatedCases, regionalData) => {
-  const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = regionalData;
+  const {
+    avgDailyIncomeInUSD,
+    avgDailyIncomePopulation
+  } = regionalData;
   const totalInfectedIncomePop = estimatedCases.estimate * avgDailyIncomePopulation
     * avgDailyIncomeInUSD;
   return (totalInfectedIncomePop / estimatedCases.days).toFixed(2);
@@ -113,10 +117,10 @@ const covid19ImpactEstimator = (data) => {
 
   // TASK: Determine 2% of infections by requested time
   impact.casesForVentilatorsByRequestedTime = Math.trunc(
-    2, impact.infectionsByRequestedTime
+    0.02 * impact.infectionsByRequestedTime
   );
 
-  severeImpact.casesForVentilatorsByRequestedTime = getPercentageFrom(
+  severeImpact.casesForVentilatorsByRequestedTime = Math.trunc(
     0.02 * severeImpact.infectionsByRequestedTime
   );
 
