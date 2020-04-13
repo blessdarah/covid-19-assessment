@@ -41,7 +41,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
 };
 
 // get x% of total
-const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage * totalCases) / 100);
+const getPercentageFrom = (percentage, totalCases) => Math.trunc((percentage / 100) * totalCases);
 
 // Get the beds needed over time
 const bedsNeededOverTime = (severeCases, availableBeds) => availableBeds - severeCases;
