@@ -36,7 +36,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       break;
   }
   const exponent = 2 ** factor;
-  const estimate = (currentInfectedCases * exponent) - 1;
+  const estimate = currentInfectedCases * exponent;
   return {
     days,
     estimate
