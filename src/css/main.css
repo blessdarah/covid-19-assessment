@@ -1,0 +1,9 @@
+form {
+    width: 30rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.container {
+    min-height: 100vh;
+}
