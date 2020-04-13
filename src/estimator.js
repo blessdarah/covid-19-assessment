@@ -21,7 +21,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
   let days = 0;
   switch (data.periodType) {
     default:
-      days = data.timeToElapse + 1;
+      days = data.timeToElapse;
       factor = Math.trunc(days / 3);
       break;
     // 7 days * # 28 weeks
@@ -35,7 +35,7 @@ const estimateFutureCases = (data, currentInfectedCases) => {
       factor = Math.trunc(days / 3);
       break;
   }
-  const exponent = 2 ** factor;
+  const exponent = 2 ** (factor + 1);
   const estimate = currentInfectedCases * exponent;
   return {
     days,
