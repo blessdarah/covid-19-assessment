@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+:root {
+  --darkblue: #161338;
+  --blue: #135589;
+  --cream: #e2d3d2;
+  --shadow: 1px 8px 18px rgba(0, 0, 0, 0.14);
+}
+html {
+  scroll-behavior: smooth;
+}
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +16,8 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #d5d5d5;
+  font-family: 'Source Sans Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color : var(--cream);
   line-height: 1.5;
 }
 
@@ -26,27 +37,29 @@ a {
 }
 
 .btn-success {
-  background: #135589;
+  background: var(--blue);
   font-weight: bold;
   width: 100%;
 }
 
 .btn:hover,
 .btn:active {
-  background: #161338;
+  background: var(--darkblue);
   color: white;
 }
 
 .btn:focus {
   opacity: 0.9;
-  box-shadow: 1px 8px 18px rgba(0, 0, 0, 0.14);
+  box-shadow: var(--shadow);
 }
 
 
 /* hero */
 
 .hero {
-  height: 70vh;
+  height: 50vh;
+  /*background-size: cover;*/
+  margin-bottom: 2.5rem;
 }
 
 .hero__container {
@@ -62,19 +75,27 @@ a {
   max-width: 700px;
   width: 100%;
   padding: 0 3rem;
+  font-size: 120%;
 }
 
 .hero__content h1 {
   text-transform: uppercase;
+  display: inline-block;
+
+  /*padding: .4rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--darkblue);*/
 }
 
 .hero .btn {
   width: 10rem;
   margin-top: 1rem;
+  background: var(--blue);
 }
 
 .hero .btn:hover {
-  box-shadow: 1px 8px 18px rgba(0, 0, 0, 0.14);
+  background: var(--darkblue);
+  box-shadow: var(--shadow);
 }
 
 .hero .btn:active {
@@ -88,7 +109,7 @@ form {
   margin: 0 1rem;
   padding: 1rem 2rem;
   border-radius: 8px;
-  box-shadow: 1px 8px 18px rgba(0, 0, 0, 0.14);
+  box-shadow: var(--shadow);
 }
 
 .form-group {
@@ -133,4 +154,53 @@ form .btn {
   place-items: center;
   padding: 0 2rem;
   margin-bottom: 2rem;
+}
+
+.form-container {
+  display: flex;
+  flex-flow: column;
+}
+
+.form-container .illustration {
+  width: 15rem;
+  margin-bottom: 2rem;
+}
+
+.illustration {
+  max-width: 100%;
+  height: auto !important;
+}
+
+@media screen and (min-width: 768px) {
+  /* hero section */
+  .hero {
+    height: 100vh;
+    margin-bottom: 4rem;
+  }
+
+  .hero__content h1 {
+    font-size: 250%;
+    font-weight: bold;
+  }
+
+  /* form container area */
+  .form-container {
+    flex-flow: row wrap;
+    justify-content: center;
+    background: #f7f7f7;
+    padding: 3rem 0;
+  }
+  .form-container .illustration {
+    flex-basis: 32em;
+  }
+  .form-container .form {
+    flex: 3;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero {
+    background: url("../../imgs/doctor-woman.svg") no-repeat 10% center,
+      url("../../imgs/mask-woman.svg") no-repeat center right;
+  }
 }
