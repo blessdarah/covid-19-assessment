@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+:root {
+  --darkblue: #161338;
+  --blue: #135589;
+  --cream: #e2d3d2;
+  --shadow: 1px 8px 18px rgba(0, 0, 0, 0.14);
+}
+html {
+  scroll-behavior: smooth;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color : var(--cream);
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  color: white;
+}
+
+.btn-success {
+  background: var(--blue);
+  font-weight: bold;
+  width: 100%;
+}
+
+.btn:hover,
+.btn:active {
+  background: var(--darkblue);
+  color: white;
+}
+
+.btn:focus {
+  opacity: 0.9;
+  box-shadow: var(--shadow);
+}
+
+
+/* hero */
+
+.hero {
+  height: 50vh;
+  /*background-size: cover;*/
+  margin-bottom: 2.5rem;
+}
+
+.hero__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  font-size: 105%;
+}
+
+.hero__content {
+  max-width: 700px;
+  width: 100%;
+  padding: 0 3rem;
+  font-size: 120%;
+}
+
+.hero__content h1 {
+  text-transform: uppercase;
+  display: inline-block;
+
+  /*padding: .4rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--darkblue);*/
+}
+
+.hero .btn {
+  width: 10rem;
+  margin-top: 1rem;
+  background: var(--blue);
+}
+
+.hero .btn:hover {
+  background: var(--darkblue);
+  box-shadow: var(--shadow);
+}
+
+.hero .btn:active {
+  transform: scale(1.05);
+}
+
+form {
+  background: #fff;
+  max-width: 25rem;
+  width: 100%;
+  margin: 0 1rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  margin: .8rem 0 1rem;
+  display: flex;
+  flex-flow: column;
+}
+
+label {
+  font-size: 1.1rem;
+  margin-bottom: .4rem;
+}
+
+.form-control,
+.form-select {
+  padding: .4rem .7rem;
+  border-radius: 4px;
+  display: block;
+  height: 2.8rem;
+  width: 100%;
+  border: 2px solid #d5d5d5;
+  font-size: .9rem;
+  color: #252424;
+  letter-spacing: 1px;
+  transition: border 300ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-control:focus {
+  border-color: #161338;
+  background: #f7f7f7;
+}
+
+form .btn {
+  margin: 1rem 0;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-container {
+  display: flex;
+  flex-flow: column;
+}
+
+.form-container .illustration {
+  width: 15rem;
+  margin-bottom: 2rem;
+}
+
+.illustration {
+  max-width: 100%;
+  height: auto !important;
+}
+
+@media screen and (min-width: 768px) {
+  /* hero section */
+  .hero {
+    height: 100vh;
+    margin-bottom: 4rem;
+  }
+
+  .hero__content h1 {
+    font-size: 250%;
+    font-weight: bold;
+  }
+
+  /* form container area */
+  .form-container {
+    flex-flow: row wrap;
+    justify-content: center;
+    background: #f7f7f7;
+    padding: 3rem 0;
+  }
+  .form-container .illustration {
+    flex-basis: 32em;
+  }
+  .form-container .form {
+    flex: 3;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero {
+    background: url("../../imgs/doctor-woman.svg") no-repeat 10% center,
+      url("../../imgs/mask-woman.svg") no-repeat center right;
+  }
+}
